@@ -9,13 +9,23 @@ import {
   KeyRound,
   AlertCircle,
   CheckCircle2,
+  Send,
+  Check,
 } from "lucide-react";
 
 export default function AccountModal({ isOpen, onClose }) {
-  const { currentUser, updateProfileDetails, updateAccountPassword, resetPassword } = useAuth();
+  const {
+    currentUser,
+    updateProfileDetails,
+    updateAccountEmail,
+    updateAccountPassword,
+    sendEmailVerificationLink,
+    resetPassword,
+  } = useAuth();
   const { accentColor } = useTheme();
 
   const [displayName, setDisplayName] = useState(currentUser?.displayName || "");
+  const [newEmail, setNewEmail] = useState(currentUser?.email || "");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -38,6 +48,50 @@ export default function AccountModal({ isOpen, onClose }) {
       setSuccessMsg("Profile name updated successfully!");
     } catch (err) {
       setError(err.message || "Failed to update profile name.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateEmail = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccessMsg("");
+
+    if (!newEmail.trim() || newEmail === currentUser?.email) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      if (updateAccountEmail) {
+        await updateAccountEmail(newEmail.trim());
+        setSuccessMsg("Email address updated successfully!");
+      }
+    } catch (err) {
+      setError(
+        err.code === "auth/requires-recent-login"
+          ? "Please log out and log back in to change your email."
+          : err.message || "Failed to update email address."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSendVerification = async () => {
+    setError("");
+    setSuccessMsg("");
+    try {
+      setLoading(true);
+      if (sendEmailVerificationLink) {
+        await sendEmailVerificationLink();
+      } else if (currentUser?.sendEmailVerification) {
+        await currentUser.sendEmailVerification();
+      }
+      setSuccessMsg("Verification link sent to your email!");
+    } catch (err) {
+      setError(err.message || "Failed to send verification email.");
     } finally {
       setLoading(false);
     }
@@ -70,15 +124,19 @@ export default function AccountModal({ isOpen, onClose }) {
         setSuccessMsg("A password reset email has been sent to your inbox.");
       }
     } catch (err) {
-      setError(err.message || "Failed to update password. You may need to log in again.");
+      setError(
+        err.code === "auth/requires-recent-login"
+          ? "Please log out and log back in to change your password."
+          : err.message || "Failed to update password."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl w-full max-w-md p-6 shadow-2xl relative transition-all">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl w-full max-w-md p-6 shadow-2xl relative transition-all my-8">
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-zinc-100 dark:border-zinc-800">
           <div className="flex items-center gap-2.5">
@@ -122,22 +180,68 @@ export default function AccountModal({ isOpen, onClose }) {
           </div>
         )}
 
-        <div className="mt-5 space-y-5 text-xs">
-          {/* Email Info (Read-only) */}
-          <div>
-            <label className="block font-medium text-zinc-600 dark:text-zinc-400 mb-1">
-              Email Address
-            </label>
-            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/60 text-zinc-600 dark:text-zinc-300">
-              <Mail className="w-3.5 h-3.5 text-zinc-400" />
-              <span>{currentUser?.email || "No email"}</span>
+        <div className="mt-5 space-y-4 text-xs">
+          {/* Email Verification Status */}
+          <div className="flex items-center justify-between p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-zinc-400" />
+              <div>
+                <p className="font-semibold text-zinc-800 dark:text-zinc-200">
+                  Email Verification
+                </p>
+                <p className="text-[10px] text-zinc-500 dark:text-zinc-400">
+                  {currentUser?.emailVerified ? "Verified" : "Unverified account"}
+                </p>
+              </div>
             </div>
+
+            {currentUser?.emailVerified ? (
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-900/60">
+                <Check className="w-3 h-3 stroke-[3]" /> Verified
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={handleSendVerification}
+                disabled={loading}
+                className="flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 border border-amber-500/30 transition cursor-pointer disabled:opacity-50"
+              >
+                <Send className="w-3 h-3" /> Verify
+              </button>
+            )}
           </div>
 
+          {/* Update Email */}
+          <form onSubmit={handleUpdateEmail} className="space-y-1.5">
+            <label className="block font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1.5">
+              <Mail className="w-3.5 h-3.5" />
+              <span>Email Address</span>
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="email"
+                required
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder="Update email"
+                className="flex-1 px-3 py-2 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 text-xs focus:outline-none focus:border-amber-400"
+              />
+              <button
+                type="submit"
+                disabled={loading || newEmail === currentUser?.email}
+                style={{ backgroundColor: accentColor }}
+                className="px-4 py-2 rounded-xl text-white font-semibold hover:opacity-90 transition disabled:opacity-50 cursor-pointer shrink-0"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+
           {/* Update Display Name */}
-          <form onSubmit={handleUpdateName} className="space-y-2">
-            <label className="block font-medium text-zinc-600 dark:text-zinc-400">
-              Display Name
+          <form onSubmit={handleUpdateName} className="space-y-1.5">
+            <label className="block font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1.5">
+              <User className="w-3.5 h-3.5" />
+              <span>Display Name</span>
             </label>
             <div className="flex gap-2">
               <input
@@ -149,9 +253,9 @@ export default function AccountModal({ isOpen, onClose }) {
               />
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || displayName === currentUser?.displayName}
                 style={{ backgroundColor: accentColor }}
-                className="px-4 py-2 rounded-xl text-white font-semibold hover:opacity-90 transition disabled:opacity-50 cursor-pointer"
+                className="px-4 py-2 rounded-xl text-white font-semibold hover:opacity-90 transition disabled:opacity-50 cursor-pointer shrink-0"
               >
                 Save
               </button>
@@ -159,7 +263,10 @@ export default function AccountModal({ isOpen, onClose }) {
           </form>
 
           {/* Change Password */}
-          <form onSubmit={handleUpdatePassword} className="space-y-2.5 pt-3 border-t border-zinc-100 dark:border-zinc-800">
+          <form
+            onSubmit={handleUpdatePassword}
+            className="space-y-2 pt-3 border-t border-zinc-100 dark:border-zinc-800"
+          >
             <label className="block font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1.5">
               <KeyRound className="w-3.5 h-3.5" />
               <span>Change Password</span>

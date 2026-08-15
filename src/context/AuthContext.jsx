@@ -1,3 +1,4 @@
+// src/context/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
@@ -5,6 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  updateEmail,
   updatePassword,
   sendEmailVerification,
   sendPasswordResetEmail,
@@ -37,17 +39,24 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const updateUserDisplayName = (name) => {
+  const updateProfileDetails = async (profileData) => {
     if (!auth.currentUser) return;
-    return updateProfile(auth.currentUser, { displayName: name });
+    await updateProfile(auth.currentUser, profileData);
+    setCurrentUser({ ...auth.currentUser });
   };
 
-  const changeUserPassword = (newPassword) => {
+  const updateAccountEmail = async (newEmail) => {
+    if (!auth.currentUser) return;
+    await updateEmail(auth.currentUser, newEmail);
+    setCurrentUser({ ...auth.currentUser });
+  };
+
+  const updateAccountPassword = (newPassword) => {
     if (!auth.currentUser) return;
     return updatePassword(auth.currentUser, newPassword);
   };
 
-  const triggerEmailVerification = () => {
+  const sendEmailVerificationLink = () => {
     if (!auth.currentUser) return;
     return sendEmailVerification(auth.currentUser);
   };
@@ -77,9 +86,10 @@ export const AuthProvider = ({ children }) => {
     signup,
     login,
     logout,
-    updateUserDisplayName,
-    changeUserPassword,
-    triggerEmailVerification,
+    updateProfileDetails,
+    updateAccountEmail,
+    updateAccountPassword,
+    sendEmailVerificationLink,
     resetPassword,
   };
 
