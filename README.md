@@ -6,15 +6,15 @@ A focused, lightweight, and modern task management workspace built with React, V
 
 ## App Previews
 
-| Landing Page | Workspace (Dark Mode) |
+|  ||
 | :---: | :---: |
-| <img src="./public/screenshots/screen1.png" alt="Landing Page" width="450" /> | <img src="./public/screenshots/screen2.png" alt="Workspace Dark Mode" width="450" /> |
-| **Task Creation Modal** | **Workspace (Light Mode)** |
+| <img src="./public/screenshots/screen.png" alt="Landing Page" width="450" /> | <img src="./public/screenshots/screen2.png" alt="Workspace Dark Mode" width="450" /> |
+| ||
 | <img src="./public/screenshots/screen3.png" alt="Task Creation Modal" width="450" /> | <img src="./public/screenshots/screen4.png" alt="Workspace Light Mode" width="450" /> |
-| **Account Settings** | **Password Management** |
+| ||
 | <img src="./public/screenshots/screen5.png" alt="Account Settings Modal" width="450" /> | <img src="./public/screenshots/screen6.png" alt="Change Password View" width="450" /> |
-| **Initial Overview** | |
-| <img src="./public/screenshots/screen7.png" alt="Initial Workspace View" width="450" /> | |
+|  | |
+| <img src="./public/screenshots/screen7.png" alt="Initial Workspace View" width="450" /> |<img src="./public/screenshots/screen8.png" alt="Initial Workspace View" width="450" /> |
 
 ---
 
