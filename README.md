@@ -90,7 +90,7 @@ task_it/
 ### 2. Clone the Repository
 
 ```bash
-git clone [https://github.com/your-username/task_it.git](https://github.com/your-username/task_it.git)
+git clone [https://github.com/Flora72/task_it](https://github.com/Flora72/task_it)
 cd task_it
 
 ```
