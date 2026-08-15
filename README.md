@@ -8,7 +8,7 @@ A focused, lightweight, and modern task management workspace built with React, V
 
 |  ||
 | :---: | :---: |
-| <img src="./public/screenshots/screen.png" alt="Landing Page" width="450" /> | <img src="./public/screenshots/screen2.png" alt="Workspace Dark Mode" width="450" /> |
+| <img src="./public/screenshots/screen1.png" alt="Landing Page" width="450" /> | <img src="./public/screenshots/screen2.png" alt="Workspace Dark Mode" width="450" /> |
 | ||
 | <img src="./public/screenshots/screen3.png" alt="Task Creation Modal" width="450" /> | <img src="./public/screenshots/screen4.png" alt="Workspace Light Mode" width="450" /> |
 | ||
@@ -45,10 +45,10 @@ A focused, lightweight, and modern task management workspace built with React, V
 ```text
 task_it/
 ├── public/
-│   ├── screenshots/            # App preview images (screen1.png to screen7.png)
+│   ├── screenshots/            # App preview images (screen1.png to screen8.png)
 │   ├── _redirects              # Netlify client-side routing redirect rules
 │   ├── favicon.png             # Workspace favicon
-│   └── hero-character.png      # 3D landing page hero asset
+│   └── hero-character.png      # 3D landing page hero character
 ├── src/
 │   ├── components/
 │   │   ├── AccountModal.jsx        # User profile & password management
