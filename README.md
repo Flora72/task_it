@@ -1,4 +1,3 @@
-```markdown
 # Task_It 
 
 A focused, lightweight, and modern task management workspace built with React, Vite, Tailwind CSS, and Firebase Firestore. Task_It streamlines daily task organization with PIN-protected notes, custom color theming, online cloud backup, and PDF export.
@@ -91,7 +90,7 @@ task_it/
 ### 2. Clone the Repository
 
 ```bash
-git clone [https://github.com/your-username/task_it.git](https://github.com/your-username/task_it.git)
+git clone https://github.com/Flora72/task_it
 cd task_it
 
 ```
@@ -197,6 +196,3 @@ service cloud.firestore {
 
 This project is open-source and available under the [MIT License](https://www.google.com/search?q=LICENSE).
 
-```
-
-```
