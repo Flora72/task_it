@@ -72,7 +72,7 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
         await login(email, password);
       } else {
         await signup(email, password, name.trim());
-        setSuccessMsg("Account created! A verification link was sent to your email.");
+        setSuccessMsg("Account created successfully!");
       }
     } catch (err) {
       if (
@@ -105,15 +105,16 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d0e12] text-zinc-100 flex items-center justify-center p-4 relative">
-      {/* Top Navbar */}
-      <div className="absolute top-6 left-6 right-6 flex justify-between items-center max-w-xl mx-auto">
+    <div className="min-h-screen bg-[#FBFBF9] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex items-center justify-center p-4 relative transition-colors duration-200">
+      {/* Top Navbar Actions */}
+      <div className="absolute top-6 left-6 right-6 flex justify-between items-center max-w-md mx-auto">
         {onBackToLanding && (
           <button
             type="button"
             onClick={onBackToLanding}
-            className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition px-3 py-1.5 rounded-xl border border-zinc-800 bg-zinc-900/80 cursor-pointer"
+            className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xs cursor-pointer shadow-xs"
           >
+            <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Home</span>
           </button>
         )}
@@ -122,23 +123,26 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
             type="button"
             onClick={toggleDarkMode}
             aria-label="Toggle visual theme"
-            className="p-2 rounded-xl border border-zinc-800 hover:bg-zinc-800 transition text-zinc-400 cursor-pointer"
+            className="p-2 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition text-zinc-600 dark:text-zinc-400 bg-white/80 dark:bg-zinc-900/80 cursor-pointer shadow-xs"
           >
             {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
-      <div className="w-full max-w-md mt-10">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-7 sm:p-9 shadow-2xl">
+      <div className="w-full max-w-md mt-12 sm:mt-0">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl p-7 sm:p-9 shadow-xl dark:shadow-2xl transition-all">
           <div className="mb-6">
-            <h1 className="text-xl font-bold tracking-tight text-white">Task It</h1>
-            <p className="text-xs text-zinc-400 mt-1">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: accentColor }} />
+              <h1 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">Task_It</h1>
+            </div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
               Personal Task & Notes Workspace
             </p>
           </div>
 
-          <div className="flex border-b border-zinc-800 mb-5 text-xs font-semibold">
+          <div className="flex border-b border-zinc-200 dark:border-zinc-800 mb-5 text-xs font-semibold">
             <button
               type="button"
               onClick={() => {
@@ -148,9 +152,10 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
               }}
               className={`pb-2.5 mr-6 transition cursor-pointer ${
                 isLogin
-                  ? "border-b-2 border-amber-400 text-amber-400 font-bold"
-                  : "text-zinc-400 hover:text-zinc-200"
+                  ? "border-b-2 text-zinc-900 dark:text-white font-bold"
+                  : "text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"
               }`}
+              style={{ borderColor: isLogin ? accentColor : "transparent", color: isLogin ? accentColor : undefined }}
             >
               Sign In
             </button>
@@ -163,23 +168,24 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
               }}
               className={`pb-2.5 transition cursor-pointer ${
                 !isLogin
-                  ? "border-b-2 border-amber-400 text-amber-400 font-bold"
-                  : "text-zinc-400 hover:text-zinc-200"
+                  ? "border-b-2 text-zinc-900 dark:text-white font-bold"
+                  : "text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200"
               }`}
+              style={{ borderColor: !isLogin ? accentColor : "transparent", color: !isLogin ? accentColor : undefined }}
             >
               Register
             </button>
           </div>
 
           {error && (
-            <div className="mb-4 p-3 rounded-xl bg-rose-950/40 border border-rose-900 text-rose-300 text-xs flex items-center gap-2">
+            <div className="mb-4 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           {successMsg && (
-            <div className="mb-4 p-3 rounded-xl bg-emerald-950/40 border border-emerald-900 text-emerald-300 text-xs flex items-center gap-2">
+            <div className="mb-4 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2">
               <Check className="w-4 h-4 shrink-0" />
               <span>{successMsg}</span>
             </div>
@@ -188,41 +194,41 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
           <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
             {!isLogin && (
               <div>
-                <label className="block font-medium text-zinc-400 mb-1">
+                <label className="block font-medium text-zinc-600 dark:text-zinc-400 mb-1">
                   Full Name
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g, Alex Kimani"
+                  placeholder="e.g., Alex Kim"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-800 bg-zinc-950 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-amber-400 transition"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs focus:outline-none focus:border-amber-400 transition"
                 />
               </div>
             )}
 
             <div>
-              <label className="block font-medium text-zinc-400 mb-1">
+              <label className="block font-medium text-zinc-600 dark:text-zinc-400 mb-1">
                 Email Address
               </label>
               <input
                 type="email"
                 required
-                placeholder="userabc@gmail.com"
+                placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-800 bg-zinc-950 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-amber-400 transition"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs focus:outline-none focus:border-amber-400 transition"
               />
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="font-medium text-zinc-400">Password</label>
+                <label className="font-medium text-zinc-600 dark:text-zinc-400">Password</label>
                 {isLogin && (
                   <button
                     type="button"
                     onClick={handleForgotPassword}
-                    className="text-[11px] text-zinc-400 hover:text-amber-400 transition cursor-pointer"
+                    className="text-[11px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition cursor-pointer"
                   >
                     Forgot password?
                   </button>
@@ -235,13 +241,13 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-3.5 pr-10 py-2.5 rounded-xl border border-zinc-800 bg-zinc-950 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-amber-400 transition"
+                  className="w-full pl-3.5 pr-10 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs focus:outline-none focus:border-amber-400 transition"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 dark:hover:text-white transition cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -250,14 +256,14 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
 
             {/* Registration Password Strength Meter */}
             {!isLogin && password.length > 0 && (
-              <div className="p-3 bg-zinc-950 rounded-xl border border-zinc-800 space-y-2">
+              <div className="p-3 bg-zinc-50 dark:bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800 space-y-2">
                 <div className="flex justify-between text-[11px]">
-                  <span className="text-zinc-400">Security Strength</span>
-                  <span className="font-semibold text-amber-400">
+                  <span className="text-zinc-500 dark:text-zinc-400">Security Strength</span>
+                  <span className="font-semibold" style={{ color: accentColor }}>
                     {strengthLevels[passedCriteriaCount - 1] || "Very Weak"}
                   </span>
                 </div>
-                <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                   <div
                     className={`h-full transition-all duration-300 ${
                       passedCriteriaCount <= 2
@@ -271,19 +277,19 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
                 </div>
 
                 <div className="grid grid-cols-2 gap-1 pt-1 text-[10px]">
-                  <span className={`flex items-center gap-1 ${hasLength ? "text-emerald-400" : "text-zinc-500"}`}>
+                  <span className={`flex items-center gap-1 ${hasLength ? "text-emerald-500" : "text-zinc-400"}`}>
                     {hasLength ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />} 8+ characters
                   </span>
-                  <span className={`flex items-center gap-1 ${hasUpper ? "text-emerald-400" : "text-zinc-500"}`}>
+                  <span className={`flex items-center gap-1 ${hasUpper ? "text-emerald-500" : "text-zinc-400"}`}>
                     {hasUpper ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />} Uppercase (A-Z)
                   </span>
-                  <span className={`flex items-center gap-1 ${hasLower ? "text-emerald-400" : "text-zinc-500"}`}>
+                  <span className={`flex items-center gap-1 ${hasLower ? "text-emerald-500" : "text-zinc-400"}`}>
                     {hasLower ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />} Lowercase (a-z)
                   </span>
-                  <span className={`flex items-center gap-1 ${hasNumber ? "text-emerald-400" : "text-zinc-500"}`}>
+                  <span className={`flex items-center gap-1 ${hasNumber ? "text-emerald-500" : "text-zinc-400"}`}>
                     {hasNumber ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />} Number (0-9)
                   </span>
-                  <span className={`flex items-center gap-1 col-span-2 ${hasSpecial ? "text-emerald-400" : "text-zinc-500"}`}>
+                  <span className={`flex items-center gap-1 col-span-2 ${hasSpecial ? "text-emerald-500" : "text-zinc-400"}`}>
                     {hasSpecial ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />} Special character (!@#$%^&*)
                   </span>
                 </div>
@@ -292,7 +298,7 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
 
             {!isLogin && (
               <div>
-                <label className="block font-medium text-zinc-400 mb-1">
+                <label className="block font-medium text-zinc-600 dark:text-zinc-400 mb-1">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -302,13 +308,13 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
                     placeholder="••••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full pl-3.5 pr-10 py-2.5 rounded-xl border border-zinc-800 bg-zinc-950 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-amber-400 transition"
+                    className="w-full pl-3.5 pr-10 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs focus:outline-none focus:border-amber-400 transition"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 dark:hover:text-white transition cursor-pointer"
                   >
                     {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -319,10 +325,11 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-300 text-zinc-950 transition glow-btn cursor-pointer disabled:opacity-50"
+              style={{ backgroundColor: accentColor }}
+              className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 text-white transition hover:opacity-90 shadow-md cursor-pointer disabled:opacity-50"
             >
-              {loading ? "Signing in..." : isLogin ? "Sign In" : "Create Account"}
-   
+              {loading ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
+              <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
           </form>
         </div>
