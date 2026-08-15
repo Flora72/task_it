@@ -1,4 +1,3 @@
-```markdown
 # Task_It 
 
 A focused, lightweight, and modern task management workspace built with React, Vite, Tailwind CSS, and Firebase Firestore. Task_It streamlines daily task organization with PIN-protected notes, custom color theming, online cloud backup, and PDF export.
