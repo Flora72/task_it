@@ -114,7 +114,7 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
             onClick={onBackToLanding}
             className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xs cursor-pointer shadow-xs"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
+          
             <span>Back to Home</span>
           </button>
         )}
@@ -135,7 +135,7 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: accentColor }} />
-              <h1 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">Task_It</h1>
+              <h1 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">Task It</h1>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
               Personal Task & Notes Workspace
@@ -214,7 +214,7 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
               <input
                 type="email"
                 required
-                placeholder="name@example.com"
+                placeholder="userabc@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs focus:outline-none focus:border-amber-400 transition"
@@ -329,7 +329,7 @@ export default function Auth({ initialMode = "login", onBackToLanding }) {
               className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 text-white transition hover:opacity-90 shadow-md cursor-pointer disabled:opacity-50"
             >
               {loading ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
-              <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+          
             </button>
           </form>
         </div>
