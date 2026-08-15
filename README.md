@@ -90,7 +90,7 @@ task_it/
 ### 2. Clone the Repository
 
 ```bash
-git clone [https://github.com/Flora72/task_it](https://github.com/Flora72/task_it)
+git clone https://github.com/Flora72/task_it
 cd task_it
 
 ```
@@ -195,7 +195,5 @@ service cloud.firestore {
 ## License
 
 This project is open-source and available under the [MIT License](https://www.google.com/search?q=LICENSE).
-
-```
 
 ```
