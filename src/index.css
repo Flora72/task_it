@@ -1,1 +1,86 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0d0e12;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Smooth, subtle floating */
+@keyframes floatSubtle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes floatDelay {
+  0%, 100% {
+    transform: translateY(0px) rotate(4deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+}
+
+.animate-float-1 {
+  animation: floatSubtle 4s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: floatDelay 5s ease-in-out infinite 1s;
+}
+
+.glow-btn {
+  box-shadow: 0 0 25px -3px rgba(245, 158, 11, 0.45);
+}
+.glow-btn:hover {
+  box-shadow: 0 0 35px 0px rgba(245, 158, 11, 0.65);
+}
+
+/* pdf exporting */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #18181b !important;
+  }
+
+  /* Hide navigation, buttons, and tools during PDF export */
+  header,
+  nav,
+  button,
+  .no-print,
+  input,
+  select {
+    display: none !important;
+  }
+
+  /* Expand print canvas */
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .note-card-shadow {
+    box-shadow: none !important;
+    border: 1px solid #e4e4e7 !important;
+    break-inside: avoid;
+    margin-bottom: 1rem !important;
+    background: #ffffff !important;
+  }
+
+  /* black text on print */
+  h1, h2, h3, p, span {
+    color: #18181b !important;
+  }
+}
