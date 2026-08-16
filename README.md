@@ -194,5 +194,5 @@ service cloud.firestore {
 
 ## License
 
-Copyright © 2026. All rights reserved. This repository and its contents are proprietary and confidential, prepared exclusively for technical assessment evaluation.
+This project is open-source and available under the MIT License.
 
